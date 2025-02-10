@@ -1,4 +1,4 @@
-<!-- src/components/NoteCard.vue -->
+
 <template>
   <div class="bg-white shadow rounded p-4 mb-4 border border-gray-200">
     <div class="mb-2 border-b border-gray-200 pb-2">

@@ -1,6 +1,6 @@
 
 import { ref } from 'vue'
-import { useNoteStore } from '../stores/noteStore'
+import { useNoteStore } from '@/stores/noteStore'
 import { useRouter } from 'vue-router'
 
 export function useNoteForm() {

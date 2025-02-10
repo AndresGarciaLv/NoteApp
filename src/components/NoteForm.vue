@@ -1,4 +1,4 @@
-<!-- src/components/NoteForm.vue -->
+
 <template>
   <form @submit.prevent="handleSubmit" class="bg-white shadow rounded p-6 mb-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Crear Nota</h2>

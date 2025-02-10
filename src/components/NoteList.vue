@@ -1,4 +1,4 @@
-<!-- src/components/NoteList.vue -->
+
 <template>
   <div>
     <!-- Encabezado con título y botón para crear nota -->

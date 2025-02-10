@@ -1,4 +1,4 @@
-<!-- src/App.vue -->
+
 <template>
   <div id="app" class="min-h-screen bg-white">
     <header class="bg-white shadow-md py-4">
