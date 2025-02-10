@@ -50,44 +50,21 @@
       </div>
     </div>
 
-    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded">
+    <button type="submit" class="mt-5 w-full bg-blue-500 hover:bg-blue-600 transition-colors cursor-pointer text-white font-semibold py-2 rounded">
       Guardar Nota
     </button>
   </form>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useNoteStore } from '../stores/noteStore'
-import { useRouter } from 'vue-router'
+import { useNoteForm } from '../composables/useNoteForm'
 
-const noteStore = useNoteStore()
-const router = useRouter()
-
-const title = ref<string>('')
-const content = ref<string>('')
-const errorMessage = ref<string>('')
-
-// Arreglo con las etiquetas disponibles para evitar duplicar código en el template
-const tags = ['Personal', 'Trabajo', 'Urgente', 'Escuela']
-const selectedTags = ref<string[]>([])
-
-function handleSubmit(): void {
-  // Validación: se requiere seleccionar al menos una etiqueta
-  if (selectedTags.value.length === 0) {
-    errorMessage.value = 'Debes seleccionar al menos una etiqueta.'
-    return
-  }
-
-  noteStore.addNote({
-    title: title.value,
-    content: content.value,
-    tags: selectedTags.value
-  })
-  title.value = ''
-  content.value = ''
-  selectedTags.value = []
-  errorMessage.value = ''
-  router.push('/')
-}
+const {
+  title,
+  content,
+  selectedTags,
+  errorMessage,
+  tags,
+  handleSubmit,
+} = useNoteForm()
 </script>

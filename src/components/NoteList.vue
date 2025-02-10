@@ -54,7 +54,7 @@
           <button
             v-if="!selectedTag"
             @click="clearAll"
-            class=" border border-red-600  hover:bg-red-700 hover:text-white transition-colors  text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
+            class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
           >
             Limpiar Todas las Notas
           </button>
@@ -62,7 +62,7 @@
           <button
             v-if="selectedTag"
             @click="clearByTag"
-            class=" border border-red-600  hover:bg-red-700 hover:text-white transition-colors  text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
+            class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
           >
             Limpiar Notas por Etiqueta
           </button>
@@ -118,51 +118,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import { useNoteStore } from '../stores/noteStore'
 import NoteCard from './NoteCard.vue'
+import { useNoteList } from '../composables/useNoteList'
 
-const noteStore = useNoteStore()
-const selectedTag = ref<string>('')
-const sortOrder = ref<string>('desc') // Orden por defecto: Más reciente
-
-// Propiedad computada que filtra y ordena las notas de forma reactiva
-const sortedFilteredNotes = computed(() => {
-  const filtered = selectedTag.value
-    ? noteStore.notes.filter(note => note.tags.includes(selectedTag.value))
-    : noteStore.notes
-
-  return filtered.slice().sort((a, b) => {
-    const dateA = new Date(a.createdAt).getTime()
-    const dateB = new Date(b.createdAt).getTime()
-    return sortOrder.value === 'desc' ? dateB - dateA : dateA - dateB
-  })
-})
-
-function clearAll(): void {
-  noteStore.clearAllNotes()
-}
-
-function clearByTag(): void {
-  if (selectedTag.value) {
-    noteStore.clearNotesByTag(selectedTag.value)
-  }
-}
-
-function deleteNote(id: string): void {
-  noteStore.deleteNote(id)
-}
-
-function getTagClasses(tag: string): string {
-  switch (tag) {
-    case 'Personal':
-      return 'bg-blue-100 text-blue-800 rounded-full px-2 py-1 text-xs'
-    case 'Trabajo':
-      return 'bg-purple-100 text-purple-800 rounded-full px-2 py-1 text-xs'
-    case 'Urgente':
-      return 'bg-orange-100 text-orange-800 rounded-full px-2 py-1 text-xs'
-    default:
-      return 'bg-gray-100 text-gray-800 rounded-full px-2 py-1 text-xs'
-  }
-}
+const {
+  noteStore,
+  selectedTag,
+  sortOrder,
+  sortedFilteredNotes,
+  clearAll,
+  clearByTag,
+  deleteNote,
+  getTagClasses,
+} = useNoteList()
 </script>

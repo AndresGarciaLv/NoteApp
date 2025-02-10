@@ -1,6 +1,7 @@
 // src/store/noteStore.ts
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
+import Swal from 'sweetalert2'  // Importamos SweetAlert2
 
 export interface Note {
   id: string
@@ -38,6 +39,7 @@ export const useNoteStore = defineStore('notes', () => {
       createdAt: Date.now()
     }
     notes.value.push(newNote)
+    Swal.fire('Creada!', 'La nota ha sido creada con éxito.', 'success')
   }
 
   // Acción: Actualizar una nota existente
@@ -45,22 +47,62 @@ export const useNoteStore = defineStore('notes', () => {
     const index = notes.value.findIndex((n: Note) => n.id === updatedNote.id)
     if (index !== -1) {
       notes.value[index] = updatedNote
+      Swal.fire('Actualizada!', 'La nota ha sido actualizada con éxito.', 'success')
     }
   }
 
-  // Acción: Eliminar una nota
-  function deleteNote(id: string): void {
-    notes.value = notes.value.filter((note: Note) => note.id !== id)
+  // Acción: Eliminar una nota con confirmación
+  async function deleteNote(id: string): Promise<void> {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    })
+
+    if (result.isConfirmed) {
+      notes.value = notes.value.filter((note: Note) => note.id !== id)
+      Swal.fire('Eliminada!', 'La nota ha sido eliminada con éxito.', 'success')
+    }
   }
 
-  // Acción: Limpiar todas las notas
-  function clearAllNotes(): void {
-    notes.value = []
+  // Acción: Limpiar todas las notas con confirmación
+  async function clearAllNotes(): Promise<void> {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará todas las notas. ¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar todas!'
+    })
+
+    if (result.isConfirmed) {
+      notes.value = []
+      Swal.fire('Eliminadas!', 'Todas las notas han sido eliminadas.', 'success')
+    }
   }
 
-  // Acción: Limpiar notas que contengan una etiqueta específica
-  function clearNotesByTag(tag: string): void {
-    notes.value = notes.value.filter((note: Note) => !note.tags.includes(tag))
+  // Acción: Limpiar notas que contengan una etiqueta específica con confirmación
+  async function clearNotesByTag(tag: string): Promise<void> {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: `Esta acción eliminará todas las notas que contengan la etiqueta "${tag}". ¡No podrás revertir esto!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar!'
+    })
+
+    if (result.isConfirmed) {
+      notes.value = notes.value.filter((note: Note) => !note.tags.includes(tag))
+      Swal.fire('Eliminadas!', `Las notas con la etiqueta "${tag}" han sido eliminadas.`, 'success')
+    }
   }
 
   // Cargar notas desde LocalStorage, si existen
@@ -91,6 +133,5 @@ export const useNoteStore = defineStore('notes', () => {
     deleteNote,
     clearAllNotes,
     clearNotesByTag,
-
   }
 })
