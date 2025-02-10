@@ -49,7 +49,7 @@
         </div>
 
         <!-- Botones de Limpieza -->
-        <div class="flex flex-col sm:flex-row gap-2">
+        <div class="flex flex-col sm:flex-row gap-2 mt-5">
           <!-- Se muestra solo si NO se está filtrando por tag -->
           <button
             v-if="!selectedTag"
@@ -119,7 +119,7 @@
 
 <script lang="ts" setup>
 import NoteCard from './NoteCard.vue'
-import { useNoteList } from '../composables/useNoteList'
+import { useNoteList } from '@/composables/useNoteList'
 
 const {
   noteStore,

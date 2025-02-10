@@ -1,8 +1,8 @@
 // src/router/index.ts
-import { createRouter, createWebHistory,  } from 'vue-router'
-import NoteList from '../components/NoteList.vue'
-import NoteForm from '../components/NoteForm.vue'
-import EditNote from '../components/EditNote.vue'
+import { createRouter, createWebHistory  } from 'vue-router'
+import NoteList from '@/components/NoteList.vue'
+import NoteForm from '@/components/NoteForm.vue'
+import EditNote from '@/components/EditNote.vue'
 
 const routes = [
   {

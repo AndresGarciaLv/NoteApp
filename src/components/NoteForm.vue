@@ -1,6 +1,7 @@
 <!-- src/components/NoteForm.vue -->
 <template>
   <form @submit.prevent="handleSubmit" class="bg-white shadow rounded p-6 mb-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Crear Nota</h2>
     <div class="mb-4">
       <label for="title" class="block text-gray-700 font-semibold mb-1">
         Título: <span class="text-red-500">*</span>
@@ -57,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useNoteForm } from '../composables/useNoteForm'
+import { useNoteForm } from '@/composables/useNoteForm'
 
 const {
   title,

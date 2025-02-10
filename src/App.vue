@@ -1,6 +1,6 @@
 <!-- src/App.vue -->
 <template>
-  <div id="app" class="min-h-screen bg-gray-100">
+  <div id="app" class="min-h-screen bg-white">
     <header class="bg-white shadow-md py-4">
       <div class="flex justify-between container mx-auto px-4">
         <router-link to="/">
