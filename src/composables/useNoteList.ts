@@ -1,20 +1,32 @@
 // src/composables/useNoteList.ts
 import { ref, computed } from 'vue'
-import { useNoteStore } from '../stores/noteStore'
+import { useNoteStore } from '@/stores/noteStore'
 
 export function useNoteList() {
   const noteStore = useNoteStore()
 
-  // Estado para el filtrado y orden
+  // Estado para el filtrado, orden y búsqueda
   const selectedTag = ref<string>('')
   const sortOrder = ref<string>('desc') // Orden por defecto: Más reciente
+  const searchQuery = ref<string>('')
 
   // Computado: filtra y ordena las notas de forma reactiva
   const sortedFilteredNotes = computed(() => {
-    const filtered = selectedTag.value
+    // Filtrado por etiqueta (si se ha seleccionado alguna)
+    let filtered = selectedTag.value
       ? noteStore.notes.filter(note => note.tags.includes(selectedTag.value))
       : noteStore.notes
 
+    // Filtrado por búsqueda: se busca en el título y el contenido (insensible a mayúsculas)
+    if (searchQuery.value.trim() !== '') {
+      const query = searchQuery.value.toLowerCase()
+      filtered = filtered.filter(note =>
+        note.title.toLowerCase().includes(query) ||
+        note.content.toLowerCase().includes(query)
+      )
+    }
+
+    // Ordenar por fecha de creación
     return filtered.slice().sort((a, b) => {
       const dateA = new Date(a.createdAt).getTime()
       const dateB = new Date(b.createdAt).getTime()
@@ -54,6 +66,7 @@ export function useNoteList() {
     noteStore,
     selectedTag,
     sortOrder,
+    searchQuery,
     sortedFilteredNotes,
     clearAll,
     clearByTag,

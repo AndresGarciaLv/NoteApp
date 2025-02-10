@@ -1,4 +1,4 @@
-
+<!-- src/components/NoteList.vue -->
 <template>
   <div>
     <!-- Encabezado con título y botón para crear nota -->
@@ -13,61 +13,19 @@
       </router-link>
     </div>
 
-    <div class="flex mr-5 ml-5">
-      <!-- Controles Compactos -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-        <!-- Filtro por Etiqueta -->
-        <div class="flex-1">
-          <label for="filterTag" class="block text-gray-700 font-semibold text-sm mb-1">
-            Filtrar por etiqueta:
-          </label>
-          <select
-            id="filterTag"
-            v-model="selectedTag"
-            class="w-[150px] cursor-pointer border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:border-blue-300 transition-colors"
-          >
-            <option value="">Todas</option>
-            <option v-for="(count, tag) in noteStore.notesByTag" :key="tag" :value="tag">
-              {{ tag }} ({{ count }})
-            </option>
-          </select>
-        </div>
-
-        <!-- Ordenar Notas -->
-        <div class="flex-1">
-          <label for="orderSelect" class="block text-gray-700 font-semibold text-sm mb-1">
-            Ordenar por:
-          </label>
-          <select
-            id="orderSelect"
-            v-model="sortOrder"
-            class="w-[150px] border rounded px-2 py-1 text-sm cursor-pointer focus:outline-none focus:ring focus:border-blue-300 transition-colors"
-          >
-            <option value="desc">Más reciente</option>
-            <option value="asc">Más antiguo</option>
-          </select>
-        </div>
-
-        <!-- Botones de Limpieza -->
-        <div class="flex flex-col sm:flex-row gap-2 mt-5">
-          <!-- Se muestra solo si NO se está filtrando por tag -->
-          <button
-            v-if="!selectedTag"
-            @click="clearAll"
-            class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
-          >
-            Limpiar Todas las Notas
-          </button>
-          <!-- Se muestra solo cuando se ha seleccionado un tag -->
-          <button
-            v-if="selectedTag"
-            @click="clearByTag"
-            class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
-          >
-            Limpiar Notas por Etiqueta
-          </button>
-        </div>
-      </div>
+    <!-- Controles (filtrado, orden y búsqueda) -->
+    <div class="mr-5 ml-5">
+      <NoteListControls
+        :notesByTag="noteStore.notesByTag"
+        :selectedTag="selectedTag"
+        :sortOrder="sortOrder"
+        :searchQuery="searchQuery"
+        @update:selectedTag="selectedTag = $event"
+        @update:sortOrder="sortOrder = $event"
+        @update:searchQuery="searchQuery = $event"
+        @clearAll="clearAll"
+        @clearByTag="clearByTag"
+      />
     </div>
 
     <!-- Lista de notas -->
@@ -118,13 +76,16 @@
 </template>
 
 <script lang="ts" setup>
+
 import NoteCard from './NoteCard.vue'
+import NoteListControls from './NoteListControls.vue'
 import { useNoteList } from '@/composables/useNoteList'
 
 const {
   noteStore,
   selectedTag,
   sortOrder,
+  searchQuery,
   sortedFilteredNotes,
   clearAll,
   clearByTag,
