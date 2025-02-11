@@ -48,19 +48,38 @@ export function useNoteList() {
   function deleteNote(id: string): void {
     noteStore.deleteNote(id)
   }
-
   function getTagClasses(tag: string): string {
     switch (tag) {
       case 'Personal':
-        return 'bg-blue-100 text-blue-800 rounded-full px-2 py-1 text-xs'
+        return 'bg-blue-100 text-blue-800 rounded-full px-2 py-1 text-xs';
       case 'Trabajo':
-        return 'bg-purple-100 text-purple-800 rounded-full px-2 py-1 text-xs'
+        return 'bg-purple-100 text-purple-800 rounded-full px-2 py-1 text-xs';
       case 'Urgente':
-        return 'bg-orange-100 text-orange-800 rounded-full px-2 py-1 text-xs'
-      default:
-        return 'bg-gray-100 text-gray-800 rounded-full px-2 py-1 text-xs'
+        return 'bg-orange-100 text-orange-800 rounded-full px-2 py-1 text-xs';
+      default: {
+        // Lista de estilos amigables predefinidos para etiquetas nuevas
+        const friendlyStyles = [
+          'bg-green-100 text-green-800 rounded-full px-2 py-1 text-xs',
+          'bg-pink-100 text-pink-800 rounded-full px-2 py-1 text-xs',
+          'bg-yellow-100 text-yellow-800 rounded-full px-2 py-1 text-xs',
+          'bg-indigo-100 text-indigo-800 rounded-full px-2 py-1 text-xs',
+          'bg-gray-100 text-gray-800 rounded-full px-2 py-1 text-xs',
+          'bg-red-100 text-red-800 rounded-full px-2 py-1 text-xs',
+          'bg-blue-200 text-blue-900 rounded-full px-2 py-1 text-xs',
+        ];
+
+        // Usamos una función hash simple para generar un índice a partir del nombre de la etiqueta.
+        let hash = 0;
+        for (let i = 0; i < tag.length; i++) {
+          hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        // Nos aseguramos de que el índice sea positivo y dentro del rango del array
+        const index = Math.abs(hash) % friendlyStyles.length;
+        return friendlyStyles[index];
+      }
     }
   }
+
 
   return {
     noteStore,

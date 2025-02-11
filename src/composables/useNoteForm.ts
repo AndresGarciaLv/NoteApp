@@ -1,11 +1,17 @@
-
+// src/composables/useNoteForm.ts
 import { ref } from 'vue'
 import { useNoteStore } from '@/stores/noteStore'
+import { useTagStore } from '@/stores/tagStore'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 export function useNoteForm() {
   const noteStore = useNoteStore()
   const router = useRouter()
+  const tagStore = useTagStore()
+
+  // Extraemos de forma reactiva las etiquetas del tagStore usando storeToRefs
+  const { tags } = storeToRefs(tagStore)
 
   // Estado del formulario
   const title = ref<string>('')
@@ -13,12 +19,7 @@ export function useNoteForm() {
   const selectedTags = ref<string[]>([])
   const errorMessage = ref<string>('')
 
-  // Arreglo de etiquetas disponibles
-  const tags = ['Personal', 'Trabajo', 'Urgente']
-
-  // Función que maneja el envío del formulario
   function handleSubmit(): void {
-    // Validación: se requiere seleccionar al menos una etiqueta
     if (selectedTags.value.length === 0) {
       errorMessage.value = 'Debes seleccionar al menos una etiqueta.'
       return
@@ -44,7 +45,7 @@ export function useNoteForm() {
     content,
     selectedTags,
     errorMessage,
-    tags,
+    tags, // Este 'tags' es reactivo gracias a storeToRefs
     handleSubmit,
   }
 }

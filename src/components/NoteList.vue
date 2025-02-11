@@ -27,7 +27,7 @@
       />
     </div>
 
-    <div v-if="sortedFilteredNotes.length" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div v-if="sortedFilteredNotes.length" class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div v-for="note in sortedFilteredNotes" :key="note.id">
         <NoteCard>
           <template #header>

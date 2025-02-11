@@ -1,7 +1,6 @@
-
 <template>
-  <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+    <!-- Input de búsqueda -->
     <div class="flex-1">
       <label for="searchInput" class="block text-gray-700 font-semibold text-sm mb-1">
         Buscar:
@@ -12,10 +11,11 @@
         v-model="localSearchQuery"
         @input="emitSearchChange"
         placeholder="Buscar notas..."
-        class="w-full border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:border-blue-300 transition-colors"
+        class="w-full bg-gray-50 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       />
     </div>
 
+    <!-- Select de filtrado por etiqueta -->
     <div class="flex-1">
       <label for="filterTag" class="block text-gray-700 font-semibold text-sm mb-1">
         Filtrar por etiqueta:
@@ -24,7 +24,7 @@
         id="filterTag"
         v-model="localSelectedTag"
         @change="emitTagChange"
-        class="w-[150px] cursor-pointer border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:border-blue-300 transition-colors"
+        class="w-[180px] bg-gray-50 border border-gray-300 rounded-md px-3 py-2 text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       >
         <option value="">Todas</option>
         <option v-for="(count, tag) in notesByTag" :key="tag" :value="tag">
@@ -33,6 +33,7 @@
       </select>
     </div>
 
+    <!-- Select de orden -->
     <div class="flex-1">
       <label for="orderSelect" class="block text-gray-700 font-semibold text-sm mb-1">
         Ordenar por:
@@ -41,25 +42,26 @@
         id="orderSelect"
         v-model="localSortOrder"
         @change="emitOrderChange"
-        class="w-[150px] border rounded px-2 py-1 text-sm cursor-pointer focus:outline-none focus:ring focus:border-blue-300 transition-colors"
+        class="w-[180px] bg-gray-50 border border-gray-300 rounded-md px-3 py-2 text-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
       >
         <option value="desc">Más reciente</option>
         <option value="asc">Más antiguo</option>
       </select>
     </div>
 
-    <div class="flex flex-col sm:flex-row gap-2 mt-5">
+    <!-- Botones de limpieza -->
+    <div class="flex flex-col sm:flex-row gap-2 mt-4">
       <button
         v-if="!localSelectedTag"
         @click="emitClearAll"
-        class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
+        class="bg-red-500 text-white hover:bg-red-600 transition-colors font-semibold text-sm px-4 py-2 rounded-md shadow-sm cursor-pointer"
       >
         Limpiar Todas las Notas
       </button>
       <button
         v-if="localSelectedTag"
         @click="emitClearByTag"
-        class="border border-red-600 hover:bg-red-700 hover:text-white transition-colors text-gray-800 font-semibold text-sm px-3 py-1 rounded cursor-pointer"
+        class="bg-red-500 text-white hover:bg-red-600 transition-colors font-semibold text-sm px-4 py-2 rounded-md shadow-sm cursor-pointer"
       >
         Limpiar Notas por Etiqueta
       </button>
@@ -85,7 +87,6 @@ const emit = defineEmits<{
   (e: 'clearAll'): void
   (e: 'clearByTag'): void
 }>()
-
 
 const localSelectedTag = ref(props.selectedTag)
 const localSortOrder = ref(props.sortOrder)
