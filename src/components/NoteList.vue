@@ -1,7 +1,7 @@
-<!-- src/components/NoteList.vue -->
+
 <template>
   <div>
-    <!-- Encabezado con título y botón para crear nota -->
+
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
       <h2 class="text-2xl font-bold text-gray-800 mb-4 md:mb-0">
         Notas (Total: {{ noteStore.totalNotes }})
@@ -13,7 +13,6 @@
       </router-link>
     </div>
 
-    <!-- Controles (filtrado, orden y búsqueda) -->
     <div class="mr-5 ml-5">
       <NoteListControls
         :notesByTag="noteStore.notesByTag"
@@ -28,7 +27,6 @@
       />
     </div>
 
-    <!-- Lista de notas -->
     <div v-if="sortedFilteredNotes.length" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div v-for="note in sortedFilteredNotes" :key="note.id">
         <NoteCard>
@@ -68,7 +66,7 @@
       </div>
     </div>
 
-    <!-- Mensaje si no hay notas -->
+   
     <div v-else class="text-center text-gray-600">
       <p>No hay notas para mostrar.</p>
     </div>

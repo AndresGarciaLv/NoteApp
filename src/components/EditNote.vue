@@ -1,4 +1,4 @@
-<!-- src/components/EditNote.vue -->
+
 <template>
   <div class="bg-white shadow rounded p-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Editar Nota</h2>

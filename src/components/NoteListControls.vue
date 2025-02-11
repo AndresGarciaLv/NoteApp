@@ -1,7 +1,7 @@
-<!-- src/components/NoteListControls.vue -->
+
 <template>
   <div class="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-    <!-- Input de búsqueda -->
+
     <div class="flex-1">
       <label for="searchInput" class="block text-gray-700 font-semibold text-sm mb-1">
         Buscar:
@@ -15,7 +15,7 @@
         class="w-full border rounded px-2 py-1 text-sm focus:outline-none focus:ring focus:border-blue-300 transition-colors"
       />
     </div>
-    <!-- Filtro por etiqueta -->
+
     <div class="flex-1">
       <label for="filterTag" class="block text-gray-700 font-semibold text-sm mb-1">
         Filtrar por etiqueta:
@@ -32,7 +32,7 @@
         </option>
       </select>
     </div>
-    <!-- Ordenar notas -->
+
     <div class="flex-1">
       <label for="orderSelect" class="block text-gray-700 font-semibold text-sm mb-1">
         Ordenar por:
@@ -47,7 +47,7 @@
         <option value="asc">Más antiguo</option>
       </select>
     </div>
-    <!-- Botones de limpieza -->
+
     <div class="flex flex-col sm:flex-row gap-2 mt-5">
       <button
         v-if="!localSelectedTag"
@@ -86,12 +86,11 @@ const emit = defineEmits<{
   (e: 'clearByTag'): void
 }>()
 
-// Variables locales para el enlace bidireccional
+
 const localSelectedTag = ref(props.selectedTag)
 const localSortOrder = ref(props.sortOrder)
 const localSearchQuery = ref(props.searchQuery)
 
-// Actualizar las variables locales si las props cambian
 watch(() => props.selectedTag, newVal => localSelectedTag.value = newVal)
 watch(() => props.sortOrder, newVal => localSortOrder.value = newVal)
 watch(() => props.searchQuery, newVal => localSearchQuery.value = newVal)

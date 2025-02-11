@@ -1,7 +1,7 @@
 // src/store/noteStore.ts
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import Swal from 'sweetalert2'  // Importamos SweetAlert2
+import Swal from 'sweetalert2' 
 
 export interface Note {
   id: string
@@ -12,13 +12,11 @@ export interface Note {
 }
 
 export const useNoteStore = defineStore('notes', () => {
-  // Estado: lista de notas
+  
   const notes = ref<Note[]>([])
 
-  // Computed: total de notas
   const totalNotes = computed(() => notes.value.length)
 
-  // Computed: total de notas por etiqueta
   const notesByTag = computed<Record<string, number>>(() => {
     const tagCount: Record<string, number> = {}
     notes.value.forEach((note: Note) => {
@@ -29,7 +27,6 @@ export const useNoteStore = defineStore('notes', () => {
     return tagCount
   })
 
-  // Acción: Agregar una nota
   function addNote(note: Omit<Note, 'id' | 'createdAt'>): void {
     const newNote: Note = {
       id: Date.now().toString(),
@@ -42,7 +39,6 @@ export const useNoteStore = defineStore('notes', () => {
     Swal.fire('Creada!', 'La nota ha sido creada con éxito.', 'success')
   }
 
-  // Acción: Actualizar una nota existente
   function updateNote(updatedNote: Note): void {
     const index = notes.value.findIndex((n: Note) => n.id === updatedNote.id)
     if (index !== -1) {
@@ -51,7 +47,6 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
-  // Acción: Eliminar una nota con confirmación
   async function deleteNote(id: string): Promise<void> {
     const result = await Swal.fire({
       title: '¿Estás seguro?',
@@ -69,7 +64,6 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
-  // Acción: Limpiar todas las notas con confirmación
   async function clearAllNotes(): Promise<void> {
     const result = await Swal.fire({
       title: '¿Estás seguro?',
@@ -87,7 +81,6 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
-  // Acción: Limpiar notas que contengan una etiqueta específica con confirmación
   async function clearNotesByTag(tag: string): Promise<void> {
     const result = await Swal.fire({
       title: '¿Estás seguro?',
@@ -105,7 +98,7 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
-  // Cargar notas desde LocalStorage, si existen
+ 
   const savedNotes = localStorage.getItem('notes')
   if (savedNotes) {
     try {
@@ -115,7 +108,6 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
-  // Sincronizar el estado con LocalStorage
   watch(
     notes,
     (newNotes) => {

@@ -14,5 +14,5 @@
 </template>
 
 <script lang="ts" setup>
-// Este componente es puramente de presentación.
+
 </script>
