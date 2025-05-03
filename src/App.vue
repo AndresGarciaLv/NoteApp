@@ -6,7 +6,7 @@
         <router-link to="/">
           <h1 class="text-3xl font-bold text-blue-800 text-center">Aplicación de Notas</h1>
         </router-link>
-        <h3 class="text-xl font-semibold text-blue-400">Garcia Leyva Andrés IDYGS81</h3>
+        <h3 class="text-xl font-semibold text-blue-400">Garcia Leyva Andrés IDYGS91</h3>
       </div>
     </header>
     <main class="container mx-auto px-4 py-6">

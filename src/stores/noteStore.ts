@@ -1,7 +1,7 @@
 // src/store/noteStore.ts
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
-import Swal from 'sweetalert2' 
+import Swal from 'sweetalert2'
 
 export interface Note {
   id: string
@@ -12,7 +12,7 @@ export interface Note {
 }
 
 export const useNoteStore = defineStore('notes', () => {
-  
+
   const notes = ref<Note[]>([])
 
   const totalNotes = computed(() => notes.value.length)
@@ -43,7 +43,7 @@ export const useNoteStore = defineStore('notes', () => {
     const index = notes.value.findIndex((n: Note) => n.id === updatedNote.id)
     if (index !== -1) {
       notes.value[index] = updatedNote
-      Swal.fire('Actualizada!', 'La nota ha sido actualizada con éxito.', 'success')
+      Swal.fire('Actualizada!', 'La notas ha sido actualizada con éxito.', 'success')
     }
   }
 
@@ -98,7 +98,7 @@ export const useNoteStore = defineStore('notes', () => {
     }
   }
 
- 
+
   const savedNotes = localStorage.getItem('notes')
   if (savedNotes) {
     try {
