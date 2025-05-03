@@ -11,7 +11,7 @@ export const useTagStore = defineStore('tags', () => {
     try {
       tags.value = JSON.parse(savedTags)
     } catch (error) {
-      console.error('Error en las etiquetas desde localStorage', error)
+      console.error('Error en las etiquetas localStorage', error)
     }
   }
 
